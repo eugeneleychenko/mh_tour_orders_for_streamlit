@@ -1,5 +1,5 @@
 selenium
-webdriver-manager
+undetected-chromedriver
 python-dotenv
 streamlit
 pandas
