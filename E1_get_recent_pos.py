@@ -5,11 +5,14 @@
 # The script processes multiple POs and saves their details to the same CSV format
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.os_manager import ChromeType
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from datetime import datetime
 import time
@@ -18,6 +21,16 @@ from dotenv import load_dotenv
 import json
 import streamlit as st
 import pandas as pd
+
+@st.cache_resource
+def get_driver():
+    options = Options()
+    options.add_argument("--disable-gpu")
+    options.add_argument("--headless")
+    return webdriver.Chrome(
+        service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()),
+        options=options
+    )
 
 def load_last_run_timestamp():
     try:
@@ -42,13 +55,9 @@ def get_recent_pos():
     username = os.getenv('SHIPHERO_SANDBOX_USERNAME')
     password = os.getenv('SHIPHERO_SANDBOX_PASSWORD')
 
-    # Set up Firefox options
-    firefox_options = Options()
-    # firefox_options.add_argument("--headless")  # Run in headless mode
-
-    # Initialize the driver
+    # Initialize the driver using the cached function
     print("Setting up the Selenium WebDriver...")
-    driver = webdriver.Firefox(options=firefox_options)
+    driver = get_driver()
 
     try:
         # Navigate to login page and perform login
