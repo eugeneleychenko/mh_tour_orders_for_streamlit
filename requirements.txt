@@ -4,3 +4,6 @@ undetected-chromedriver
 python-dotenv
 streamlit
 pandas
+streamlit
+seleniumbase
+webdriver-manager

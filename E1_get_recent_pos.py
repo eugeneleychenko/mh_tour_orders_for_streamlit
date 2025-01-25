@@ -35,8 +35,7 @@ def get_driver():
     
     driver = uc.Chrome(
         options=options,
-        driver_executable_path="/usr/bin/chromedriver",
-        browser_executable_path="/usr/bin/chromium-browser"
+        use_subprocess=True
     )
     return driver
 
