@@ -25,8 +25,15 @@ import pandas as pd
 @st.cache_resource
 def get_driver():
     options = Options()
-    options.add_argument("--disable-gpu")
     options.add_argument("--headless")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-infobars")
+    options.add_argument("--remote-debugging-port=9222")
+    options.binary_location = "/usr/bin/chromium-browser"
+    
     return webdriver.Chrome(
         service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()),
         options=options

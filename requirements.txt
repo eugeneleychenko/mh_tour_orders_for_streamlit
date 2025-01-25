@@ -3,3 +3,4 @@ python-dotenv
 streamlit
 pandas
 webdriver-manager
+chromium-chromedriver
